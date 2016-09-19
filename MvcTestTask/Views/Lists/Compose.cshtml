@@ -1,0 +1,44 @@
+﻿@model MvcTestTask.Models.Api.Newsletter
+
+@{
+    ViewBag.Title = "Compose";
+}
+
+<div>
+
+    @using (Html.BeginForm("Send", "Lists", FormMethod.Post))
+    {
+        <h3>Форма рассылки</h3>
+        <form method="post">
+            <table>
+                <tr>
+                    <td><p>Имя: </p></td>
+                    <td>@Html.EditorFor(m => m.Content.FromName)</td>
+                    <td>@Html.ValidationMessageFor(m => m.Content.FromName)</td>
+                </tr>
+                <tr>
+                    <td><p>E-mail: </p></td>
+                    <td>@Html.EditorFor(m => m.Content.FromEmail)</td>
+                    <td>@Html.ValidationMessageFor(m => m.Content.FromEmail)</td>
+                </tr>
+                <tr>
+                    <td><p>Тема: </p></td>
+                    <td>@Html.EditorFor(m => m.Content.Subject)</td>
+                    <td>@Html.ValidationMessageFor(m => m.Content.Subject)</td>
+                </tr>
+                <tr>
+                    <td><p>Текст: </p></td>
+                    <td>@Html.EditorFor(m => m.Content.Plain)</td>
+                </tr>
+                <tr>
+                    <td><p>Номер рассылки: </p></td>
+                    <td>@Html.EditorFor(m => m.Recipients.SeedLists.SeedList)</td>
+                    <td>@Html.ValidationMessageFor(m => m.Recipients.SeedLists.SeedList)</td>
+                </tr>
+                <tr><td><input type="submit" value="Отправить" /> </td><td></td></tr>
+            </table>
+        </form>
+    }
+</div>
+
+

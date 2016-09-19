@@ -1,0 +1,66 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using MvcTestTask.Models.Api;
+@using MvcTestTask.Models;
+@model ApiLists
+
+@{
+    string[] headers = new string[] { Constants.TH_ID, Constants.TH_NAME, Constants.TH_FRIENDLY_NAME, Constants.TH_LANGUAGE, Constants.TH_OPT_MODE };
+}
+
+@helper CreateTableHeader(string[] headers)
+{
+    <tr>
+        @foreach (string s in headers)
+        {
+            <th>@s</th>
+        }
+    </tr>
+}
+
+@helper CreateTableBody(ApiLists lists, string optMode)
+{
+    foreach (var list in lists.Lists)
+    {
+        if (list.OptInMode == optMode)
+        {
+            <tr>
+                <td>@list.Id</td>
+                <td>@list.Name</td>
+                <td>@list.FriendlyName</td>
+                <td>@list.Language</td>
+                <td>@list.OptInMode</td>
+            </tr>
+        }
+    }
+}
+@using (Html.BeginForm("Compose", "Lists", FormMethod.Post))
+{
+    <table>
+        <tr>
+            <td><input type="submit" value="Отправить" /></td>
+        </tr>
+    </table>
+}
+<div class="table">
+    <div style="overflow: hidden; _zoom: 1">
+        <table style="float: left; width: 50%">
+            <caption>Режим подписки - @Constants.SINGLE_OPT_IN</caption>
+            @CreateTableHeader(@headers)
+
+            @CreateTableBody(@Model, Constants.SINGLE_OPT_IN)
+
+        </table>
+
+        <table style="float: right; width: 50%">
+            <caption>Режим подписки - @Constants.DOUBLE_OPT_IN</caption>
+            @CreateTableHeader(@headers)
+
+            @CreateTableBody(@Model, Constants.DOUBLE_OPT_IN)
+        </table>
+    </div>
+</div>
+
+
